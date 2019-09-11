@@ -22,12 +22,9 @@ public class DeleteUserServlet extends HttpServlet {
         String message = "Ошибка удаления записи!";
 
         try {
-            if (userService.deleteUserById(Integer.parseInt(req.getParameter("id")))) {
-                message = "Запись удалена!";
-                resp.setStatus(200);
-            } else {
-                resp.setStatus(400);
-            }
+            userService.deleteUserById(Integer.parseInt(req.getParameter("id")));
+            message = "Запись удалена!";
+            resp.setStatus(200);
 
         } catch (Exception e) {
             e.printStackTrace();

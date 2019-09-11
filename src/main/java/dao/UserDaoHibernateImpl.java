@@ -21,21 +21,12 @@ public class UserDaoHibernateImpl implements UserDAO {
 
     }
 
-    private Session getSession() throws ApplicationException {
-        try {
-            return sessionFactory.openSession();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ApplicationException("Ошибка открытия сессии!");
-        }
-    }
-
     @Override
     public void createUser(User user) throws ApplicationException {
 
         Transaction transaction = null;
 
-        try (Session session = getSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
@@ -52,7 +43,7 @@ public class UserDaoHibernateImpl implements UserDAO {
     @Override
     //language=hql
     public List<User> getAllUsers() throws ApplicationException {
-        try (Session session = getSession()) {
+        try (Session session = sessionFactory.openSession()) {
 
             Transaction transaction = session.beginTransaction();
             List<User> users = session.createQuery("FROM User").list();
@@ -71,7 +62,7 @@ public class UserDaoHibernateImpl implements UserDAO {
 
         Transaction transaction = null;
 
-        try (Session session = getSession()) {
+        try (Session session = sessionFactory.openSession()) {
 
             transaction = session.beginTransaction();
             session.update(user);
@@ -92,7 +83,7 @@ public class UserDaoHibernateImpl implements UserDAO {
 
         Transaction transaction = null;
 
-        try (Session session = getSession()) {
+        try (Session session = sessionFactory.openSession()) {
 
             transaction = session.beginTransaction();
             session.createQuery("DELETE FROM User WHERE id = :id")

@@ -10,14 +10,15 @@ import java.sql.DriverManager;
 
 public class DBHelper {
 
-    private static DBProperties properties = new DBProperties();
-
     private static Connection connection;
 
     private static Configuration configuration;
 
     public Connection getConnection() throws ApplicationException {
         if (connection == null) {
+
+            DBProperties properties = new DBProperties();
+
             try {
                 DriverManager.registerDriver((Driver) Class.forName(properties.getAppProperty("driver")).getDeclaredConstructor().newInstance());
 
@@ -36,6 +37,8 @@ public class DBHelper {
 
     public Configuration getConfiguration() throws ApplicationException {
         if (configuration == null) {
+
+            DBProperties properties = new DBProperties();
 
             try {
                 configuration = new Configuration();

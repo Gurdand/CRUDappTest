@@ -27,10 +27,9 @@ public class CreateUserServlet extends HttpServlet {
             user.setName(req.getParameter("name"));
             user.setAge(Integer.parseInt(req.getParameter("age")));
 
-            if (userService.createUser(user)) {
-                message = "Новый юзер " + user.getName() + " добавлен!";
-                resp.setStatus(200);
-            }
+            userService.createUser(user);
+            message = "Новый юзер " + user.getName() + " добавлен!";
+            resp.setStatus(200);
 
         } catch (Exception e) {
             e.printStackTrace();

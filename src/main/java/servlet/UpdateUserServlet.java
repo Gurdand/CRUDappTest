@@ -27,12 +27,9 @@ public class UpdateUserServlet extends HttpServlet {
                     req.getParameter("name"),
                     Integer.parseInt(req.getParameter("age")));
 
-            if (userService.updateUser(user)) {
-                message = "Данные обновлены!";
-                resp.setStatus(200);
-            } else {
-                resp.setStatus(400);
-            }
+            userService.updateUser(user);
+            message = "Данные обновлены!";
+            resp.setStatus(200);
 
         } catch (Exception e) {
             e.printStackTrace();

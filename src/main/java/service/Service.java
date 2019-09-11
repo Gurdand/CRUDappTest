@@ -1,16 +1,18 @@
 package service;
 
+import exception.ApplicationException;
 import model.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface Service {
 
-    boolean createUser(User user);
+    void createUser(User user) throws SQLException, ApplicationException;
 
-    List<User> getAllUsers();
+    List<User> getAllUsers() throws ApplicationException;
 
-    boolean deleteUserById(int id);
+    void deleteUserById(int id) throws SQLException, ApplicationException;
 
-    boolean updateUser(User user);
+    void updateUser(User user) throws SQLException, ApplicationException;
 }

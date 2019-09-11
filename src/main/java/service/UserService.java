@@ -2,8 +2,10 @@ package service;
 
 import dao.UserDAO;
 import dao.UserDaoFactory;
+import exception.ApplicationException;
 import model.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserService implements Service {
@@ -27,43 +29,20 @@ public class UserService implements Service {
         return userService;
     }
 
-    public boolean createUser(User user) {
-        try {
+    public void createUser(User user) throws SQLException, ApplicationException {
             userDAO.createUser(user);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
-    public List<User> getAllUsers() {
-        try {
+    public List<User> getAllUsers() throws ApplicationException {
             return userDAO.getAllUsers();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
-    public boolean deleteUserById(int id) {
-        try {
+    public void deleteUserById(int id) throws SQLException, ApplicationException {
             userDAO.deleteUser(id);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
-    public boolean updateUser(User user) {
-        try {
+    public void updateUser(User user) throws SQLException, ApplicationException {
             userDAO.updateUser(user);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
 }
