@@ -2,12 +2,12 @@ package servlet.login;
 
 import model.User;
 import service.UserService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/login")
@@ -27,7 +27,10 @@ public class LoginServlet extends HttpServlet {
             User user = userService.getUserByLogin(login);
 
             if (user != null && user.getPassword().equals(password)) {
-                req.getSession(true).setAttribute("role", user.getRole());
+
+                HttpSession session = req.getSession(true);
+
+                session.setAttribute("role", user.getRole());
                 resp.setStatus(200);
 
                 if (user.getRole().equals("admin")) {
