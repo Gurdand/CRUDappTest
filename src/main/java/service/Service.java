@@ -15,4 +15,6 @@ public interface Service {
     void deleteUserById(int id) throws SQLException, ApplicationException;
 
     void updateUser(User user) throws SQLException, ApplicationException;
+
+    User getUserByLogin(String login) throws SQLException, ApplicationException;
 }

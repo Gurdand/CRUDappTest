@@ -1,4 +1,4 @@
-package servlet;
+package servlet.admin;
 
 import service.UserService;
 
@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/users/delete")
+@WebServlet("/admin/delete")
 public class DeleteUserServlet extends HttpServlet {
 
     private UserService userService = UserService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html;charset=utf-8");
+        req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
 
         String message = "Ошибка удаления записи!";
@@ -33,7 +33,7 @@ public class DeleteUserServlet extends HttpServlet {
 
         req.setAttribute("message", message);
 
-        getServletContext().getRequestDispatcher("/users").forward(req,resp);
+        getServletContext().getRequestDispatcher("/admin").forward(req,resp);
 
     }
 

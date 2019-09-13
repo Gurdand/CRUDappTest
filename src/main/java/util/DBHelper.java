@@ -4,6 +4,7 @@ import exception.ApplicationException;
 import model.User;
 import org.hibernate.cfg.Configuration;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;

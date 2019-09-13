@@ -1,4 +1,4 @@
-package servlet;
+package servlet.admin;
 
 import model.User;
 import service.UserService;
@@ -9,35 +9,39 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-@WebServlet("/users/create")
-public class CreateUserServlet extends HttpServlet {
+@WebServlet("/admin/*")
+public class AdminServlet extends HttpServlet {
 
     private UserService userService = UserService.getInstance();
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req,resp);
+    }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
 
-        String message = "Ошибка! Юзер не добавлен!";
+        req.setAttribute("message", req.getAttribute("message"));
 
         try {
-            User user = new User();
-            user.setName(req.getParameter("name"));
-            user.setAge(Integer.parseInt(req.getParameter("age")));
+            List<User> users = userService.getAllUsers();
 
-            userService.createUser(user);
-            message = "Новый юзер " + user.getName() + " добавлен!";
+            req.setAttribute("users", users);
             resp.setStatus(200);
 
         } catch (Exception e) {
             e.printStackTrace();
+            req.setAttribute("message", "Упс! Что то пошло не так! =(");
             resp.setStatus(400);
         }
 
-        req.setAttribute("message", message);
+        getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(req,resp);
 
-        getServletContext().getRequestDispatcher("/users").forward(req,resp);
     }
 }

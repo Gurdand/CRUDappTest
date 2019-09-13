@@ -4,14 +4,13 @@ import exception.ApplicationException;
 import model.User;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
-
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDAO {
 
     private SessionFactory sessionFactory;
 
-    public UserDaoHibernateImpl(Configuration configuration) throws ApplicationException {
+    UserDaoHibernateImpl(Configuration configuration) throws ApplicationException {
         try {
             sessionFactory = configuration.buildSessionFactory();
         } catch (Exception e) {
@@ -46,7 +45,7 @@ public class UserDaoHibernateImpl implements UserDAO {
         try (Session session = sessionFactory.openSession()) {
 
             Transaction transaction = session.beginTransaction();
-            List<User> users = session.createQuery("FROM User").list();
+            List<User> users = session.createQuery("FROM User", User.class).list();
             transaction.commit();
             return users;
 
@@ -99,5 +98,26 @@ public class UserDaoHibernateImpl implements UserDAO {
         }
     }
 
+    @Override
+    //language=hql
+    public User getUserByLogin(String login) throws ApplicationException {
 
+        Transaction transaction = null;
+
+        try (Session session = sessionFactory.openSession()) {
+
+            transaction = session.beginTransaction();
+            User user = session.createQuery("FROM User WHERE login = :login", User.class)
+                    .setParameter("login", login).uniqueResult();
+            transaction.commit();
+            return user;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new ApplicationException("Ошибка транзакции!");
+        }
+    }
 }

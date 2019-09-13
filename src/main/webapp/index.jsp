@@ -13,7 +13,12 @@
   <body>
     <header>
       <h1>User Manager</h1>
-      <a href="/users">Menage user list</a>
+      <form method="post" action="/login">
+        <input name="login" placeholder="Login">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" value="Войти">
+      </form>
+      <p>${message}</p>
     </header>
   </body>
 </html>

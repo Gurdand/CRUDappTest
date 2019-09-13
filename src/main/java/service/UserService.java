@@ -30,19 +30,24 @@ public class UserService implements Service {
     }
 
     public void createUser(User user) throws SQLException, ApplicationException {
-            userDAO.createUser(user);
+        userDAO.createUser(user);
     }
 
     public List<User> getAllUsers() throws ApplicationException {
-            return userDAO.getAllUsers();
+        return userDAO.getAllUsers();
     }
 
     public void deleteUserById(int id) throws SQLException, ApplicationException {
-            userDAO.deleteUser(id);
+        userDAO.deleteUser(id);
     }
 
     public void updateUser(User user) throws SQLException, ApplicationException {
-            userDAO.updateUser(user);
+        userDAO.updateUser(user);
+    }
+
+    @Override
+    public User getUserByLogin(String login) throws SQLException, ApplicationException {
+        return userDAO.getUserByLogin(login);
     }
 
 }

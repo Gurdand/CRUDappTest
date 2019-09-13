@@ -1,4 +1,4 @@
-package servlet;
+package servlet.admin;
 
 import model.User;
 import service.UserService;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/users/update")
-public class UpdateUserServlet extends HttpServlet {
+@WebServlet("/admin/create")
+public class CreateUserServlet extends HttpServlet {
 
     private UserService userService = UserService.getInstance();
 
@@ -20,15 +20,18 @@ public class UpdateUserServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
 
-        String message = "Ошибка! Невозможно обновить данные!";
+        String message = "Ошибка! Юзер не добавлен!";
 
         try {
-            User user = new User(Integer.parseInt(req.getParameter("id")),
-                    req.getParameter("name"),
-                    Integer.parseInt(req.getParameter("age")));
+            User user = new User();
+            user.setName(req.getParameter("name"));
+            user.setAge(Integer.parseInt(req.getParameter("age")));
+            user.setLogin(req.getParameter("login"));
+            user.setPassword(req.getParameter("password"));
+            user.setRole(req.getParameter("role"));
 
-            userService.updateUser(user);
-            message = "Данные обновлены!";
+            userService.createUser(user);
+            message = "Новый юзер " + user.getName() + " добавлен!";
             resp.setStatus(200);
 
         } catch (Exception e) {
@@ -38,7 +41,6 @@ public class UpdateUserServlet extends HttpServlet {
 
         req.setAttribute("message", message);
 
-        getServletContext().getRequestDispatcher("/users").forward(req,resp);
-
+        getServletContext().getRequestDispatcher("/admin").forward(req,resp);
     }
 }

@@ -15,4 +15,6 @@ public interface UserDAO {
     void updateUser(User user) throws SQLException, ApplicationException;
 
     void deleteUser(int id) throws SQLException, ApplicationException;
+
+    User getUserByLogin(String login) throws SQLException, ApplicationException;
 }
